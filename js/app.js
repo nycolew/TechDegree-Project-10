@@ -27,5 +27,7 @@ goFetch('https://randomuser.me/api/?results=12&nat=us,gb')
           <a href="mailto:${users[i].email}">${users[i].email}</a>
           <p>${users[i].location.city}</p>
       `;
+
+      createLink.innerHTML = populateCard;
     }
   })
