@@ -31,3 +31,4 @@ goFetch('https://randomuser.me/api/?results=12&nat=us,gb')
       createLink.innerHTML = populateCard;
     }
   })
+// Adding comment for testing purposes
