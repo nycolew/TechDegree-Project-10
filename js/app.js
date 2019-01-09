@@ -13,7 +13,7 @@ function goFetch(url) {
 goFetch('https://randomuser.me/api/?results=12&nat=us,gb')
   .then(info => userArray.push(info))
   .then(loop => {
-    for (let i = 0, i <= userArray[0].results.length, i+=1) {
+    for (let i = 0; i < userArray[0].results.length; i+=1) {
       const users = userArray[0].results;
       const createLink = document.createElement('a');
       container.appendChild('createLink');
