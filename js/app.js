@@ -1,10 +1,20 @@
 const userArray = [];
 const container = document.getElementById('container');
 
+// CHECK RESPONSE FOR ERRORS
+
+function checksOut(response) {
+  if (response.ok) {
+    return Promise.resolve(response)
+  } else {
+    return Promise.reject(new Error(response.statusText))
+  }
+};
+
 // REUSABLE FETCH FUNCTION
 function goFetch(url) {
   return fetch(url)
-    .then(checkOK)
+    .then(checksOut)
     .then(response => response.json)
     .catch(new Error('Fetch failed.'))
 };
