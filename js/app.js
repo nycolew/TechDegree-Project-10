@@ -2,7 +2,6 @@ const userArray = [];
 const container = document.getElementById('container');
 
 // CHECK RESPONSE FOR ERRORS
-
 function checksOut(response) {
   if (response.ok) {
     return Promise.resolve(response)
@@ -15,7 +14,7 @@ function checksOut(response) {
 function goFetch(url) {
   return fetch(url)
     .then(checksOut)
-    .then(response => response.json)
+    .then(response => response.json())
     .catch(new Error('Fetch failed.'))
 };
 
@@ -41,4 +40,3 @@ goFetch('https://randomuser.me/api/?results=12&nat=us,gb')
       createLink.innerHTML = populateCard;
     }
   })
-// Adding comment for testing purposes
