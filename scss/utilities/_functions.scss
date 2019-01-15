@@ -1,0 +1,17 @@
+//==========================
+//      FUNCTIONS
+//==========================
+
+
+//Pixels to Em Function
+
+@function em($target, $context: $base__font-size) {
+  @return ($target / $context) * 1em;
+}
+
+
+// Import Google URL if variable exists
+
+@if variable-exists(font-url--google) {
+  @import url($font-url--google);
+}

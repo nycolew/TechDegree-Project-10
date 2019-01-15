@@ -1,0 +1,73 @@
+// =========================
+//        MIXINS
+// =========================
+
+// Create Grid
+
+@mixin g-columns {
+  @for $i from 1 through $g-col-count {
+
+    $context: g-context($g-col-width, $g-col-count, $g-gutter-width) !global;
+    $target: ($g-col-width * $i) + ($g-gutter-width * ($i - 1));
+
+    // Create grid column modifiers
+
+    &--#{$i} {
+      width: percentage($target / $context);
+      display: flex;
+      }
+    }
+  };
+
+  // BEM Selectors
+
+  @mixin e($element) {
+    &__#{$element} {
+      @content;
+    }
+  };
+
+  @mixin m($modifier) {
+    &--#{$modifier} {
+      @content;
+    }
+  };
+
+// Flexbox
+
+@mixin flexify(
+  $disp : flex,
+  $dir  : null,
+  $just : null,
+  $wrap : null) {
+    display: $disp;
+    flex-direction: $dir;
+    justify-content: $just;
+    flex-wrap: $wrap;
+    };
+
+// Media Queries
+
+@mixin mq($break) {
+@if $break == "small" {
+  @media(min-width: $brkpoint-sm) {
+    @content;
+  }
+}
+
+@else if $break == "medium" {
+  @media(min-width: $brkpoint-md + 1) {
+    @content;
+  }
+}
+
+@else if $break == "large" {
+  @media(min-width: $brkpoint-lg) {
+    @content;
+  }
+}
+
+@else {
+  @error "'#{$break}' is not a valid entry."
+}
+};

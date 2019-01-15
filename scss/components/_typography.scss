@@ -1,0 +1,39 @@
+// ====================
+//      TYPOGRAPHY
+// ====================
+
+h2 {
+  font-family: $font-family--secondary;
+  font-size: em(20px);
+  color: lighten($color-accent, 10%);
+  text-transform: capitalize;
+  margin-bottom: em(2px);
+}
+
+.email {
+  text-decoration: none;
+  color: darken($link-water, 30%);
+  font-weight: bold;
+  margin-bottom: em(2px);
+
+  &:visited {
+    color: $color-text;
+  }
+
+  &:hover {
+    opacity: .75;
+  }
+}
+
+h1 {
+  font-family: $font-family--secondary;
+  font-size: em(36px);
+  background: -webkit-linear-gradient($cello, $link-water 100%);
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+}
+
+.city {
+  text-transform: capitalize;
+  margin-top: em(5px);
+}

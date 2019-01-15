@@ -1,0 +1,45 @@
+// ============================
+//        CONFIG
+// ============================
+
+// Colors
+
+$gallery        : #efefef;
+$coral-red      : #ff383f;
+$silver-chalice : #a9a9a9;
+$link-water     : #caebf2;
+$cello          : #1d305d;
+$mine-shaft     : #373737;
+$white          : #ffffff;
+
+// Color Usage
+
+$color-primary      : $gallery;
+$color-secondary    : $silver-chalice;
+$color-accent       : $cello;
+$color-shade        : $link-water;
+$color-text         : $mine-shaft;
+
+// Fonts
+
+$font-url--google       : 'https://fonts.googleapis.com/css?family=Shrikhand|Thasadith';
+$font-family--primary   : 'Thasadith', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-family--secondary : 'Shrikhand', 'Thasadith', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$base__font-size        : 16px;
+
+// Breakpoints
+
+$brkpoint-sm: 1px;
+$brkpoint-md: 768px;
+$brkpoint-lg: 1024px;
+
+// Border Radius
+
+$br-default: .3em;
+
+// Grid Config
+
+$g-col-width      : 75px;
+$g-gutter-width   : 20px;
+$g-col-count      : 12;
+$g-cont-max-w     : 100%;

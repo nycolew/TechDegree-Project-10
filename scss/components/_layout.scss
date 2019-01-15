@@ -1,0 +1,90 @@
+// =========================
+//        LAYOUT
+// =========================
+
+#container {
+  @include flexify($dir: row, $just: space-between, $wrap: wrap);
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+a:not(.email) {
+  width: 30%;
+}
+
+.card {
+  @include flexify($dir: row, $just: center);
+  background: $white;
+  border: 2px solid $color-shade;
+  width: 100%;
+  margin: em(5px);
+  padding: em(25px);
+  cursor: pointer;
+}
+
+.pic,
+.text,
+.city,
+h2 {
+  background: $white;
+}
+
+header {
+  @include flexify($dir: row, $just: space-between);
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#modal {
+  background: rgba(55, 55, 55, 0.85);
+  z-index: 100;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  display: none;
+}
+
+#modal_window {
+  background: $white;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 1000;
+  width: 25%;
+  height: 40%;
+  top: 25%;
+  left: 38%;
+  display: none;
+  border-radius: 0.5em;
+  border: 4px solid darken($link-water, 40%);
+  animation-name: openModal;
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(.06,-0.09,.82,1.25);
+}
+
+@keyframes openModal {
+  from {top: -300px; opacity: 0}
+  to{top: 30%; opacity: 1}
+}
+
+/* The animation code */
+// @keyframes example {
+//   0%   {background-color: red;}
+//   25%  {background-color: yellow;}
+//   50%  {background-color: blue;}
+//   100% {background-color: green;}
+// }
+
+/* The element to apply the animation to */
+// div {
+//   width: 100px;
+//   height: 100px;
+//   background-color: red;
+//   animation-name: example;
+//   animation-duration: 4s;
+// }
