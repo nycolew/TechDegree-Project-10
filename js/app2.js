@@ -1,9 +1,9 @@
 
 let userArray = [];
 let i = 0;
-const container = document.getElementById('container');
-const modal = document.getElementById('modal');
-const modalWindow = document.getElementById('modal_window');
+const container = document.getElementById("container");
+const modal = document.getElementById("modal");
+const modalWindow = document.getElementById("modal_window");
 let cardNumber;
 
 
@@ -43,14 +43,14 @@ goFetch('https://randomuser.me/api/?results=12&nat=us,gb')
       container.appendChild(createLink);
 
       let populateCard = `
-        <div class="card clickable">
-          <div class="pic clickable">
+        <div class="card">
+          <div class="pic">
             <img src="${users[i].picture.medium}" alt="Picture of ${users[i].name.first} ${users[i].name.last}">
           </div>
-          <div class="text clickable">
+          <div class="text">
             <h2>${users[i].name.first} ${users[i].name.last}</h2>
-            <a class="email clickable" href="mailto:${users[i].email}">${users[i].email}</a>
-            <p class="city clickable">${users[i].location.city}</p>
+            <a class="email" href="mailto:${users[i].email}">${users[i].email}</a>
+            <p class="city">${users[i].location.city}</p>
           </div>
         </div>
       `;
@@ -61,13 +61,16 @@ goFetch('https://randomuser.me/api/?results=12&nat=us,gb')
 
 // WHEN CARD IS CLICKED, OPEN MODAL WINDOW WITH THAT CARD'S DATA
 
+// const users = userArray[0].results;
+// console.log(users);
+
 function openModal() {
   modal.style.display = "block";
   modalWindow.style.display = "block";
 }
 
 function fillModal() {
-  const users = userArray[0].results;
+  // const users = userArray[0].results;
   let modalHTML = `
     <span id="close-window">&times;</span>
     <span id="previous" onclick="scrollLeft()">&#10094;</span>
@@ -82,19 +85,17 @@ function fillModal() {
 }
 
 const allCards = document.querySelectorAll('.card');
+
 container.addEventListener('click', (e) => {
-  if (e.target.className === 'clickable') {
-    for (i = 0; i < allCards[0].length; i++) {
-      if (allCards[i] == e.target
-      || allCards[i] == e.target.parentElement
-      || allCards[i] == e.target.parentElement.parentElement) {
-        cardNumber = i;
-      }
-      console.log(cardNumber);
+  for (i = 0; i < allCards.length; i++) {
+    if (allCards[i] == e.target
+    || allCards[i] == e.target.parentElement
+    || allCards[i] == e.target.parentElement.parentElement) {
+      cardNumber = i;
     }
-    openModal();
-    setTimeout(fillModal(), 500);
   }
+  openModal();
+  setTimeout( () => { fillModal(); }, 400);
 });
 
 // WHEN ARROWS ARE CLICKED, MOVE LEFT OR RIGHT THROUGH USERS
