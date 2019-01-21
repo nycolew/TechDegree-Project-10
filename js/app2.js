@@ -25,7 +25,9 @@ function checksOut(response) {
 function goFetch(url) {
   return fetch(url)
     .then(checksOut)
-    .then(info => info.json())
+    .then(function(response) {
+      return response.json();
+    })
     .catch(new Error('Fetch failed.'))
 };
 
