@@ -61,8 +61,7 @@ goFetch('https://randomuser.me/api/?results=12&nat=us,gb')
 
 // WHEN CARD IS CLICKED, OPEN MODAL WINDOW WITH THAT CARD'S DATA
 
-// const users = userArray[0].results;
-// console.log(users);
+const users = userArray[0].results;
 
 function openModal() {
   modal.style.display = "block";
