@@ -10,6 +10,8 @@ let allCards;
 let leftArrow;
 let rightArrow;
 
+window.addEventListener('click', clickOut);
+
 // FETCH DATA FROM API AND CONVERT TO JSON
 // >> Set function to check responses for errors
 
@@ -75,7 +77,7 @@ function openModal() {
 function fillModal() {
   let modalHTML = `
 
-      <span id="close-window">&times;</span>
+      <span id="close-window" onclick="clickExit()">&times;</span>
       <div id="info-container">
         <span id="previous">&#10094;</span>
         <div id="windowCard">
@@ -133,5 +135,19 @@ rightArrow.addEventListener('click', (e) => {
 })
 
 // WHEN X IS CLICKED OR AN OUTSIDE CLICK IS DETECTED, CLOSE MODAL WINDOW
+
+function clickOut(e) {
+  if (e.target == modal) {
+    modal.style.display = "none";
+    modalWindow.style.display = "none";
+    modalWindow.innerHTML = '';
+  }
+}
+
+function clickExit(e) {
+  modal.style.display = "none";
+  modalWindow.style.display = "none";
+  modalWindow.innerHTML = '';
+}
 
 // ALLOW SEARCH BOX INPUT TO FILTER USERS BY NAME
