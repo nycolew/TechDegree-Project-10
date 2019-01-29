@@ -416,7 +416,7 @@ header {
   border: 4px solid #2fa7c1;
   animation-name: openModal;
   animation-duration: 0.5s;
-  animation-timing-function: cubic-bezier(0.06, -0.09, 0.82, 1.25);
+  animation-timing-function: cubic-bezier(0.04, -0.15, 0.76, 1.31);
 }
 
 @keyframes openModal {
@@ -425,7 +425,7 @@ header {
     opacity: 0;
   }
   to {
-    top: 30%;
+    top: 15%;
     opacity: 1;
   }
 }
@@ -437,7 +437,7 @@ header {
   top: 0;
   right: 10px;
   font-size: 1.875em;
-  padding-top: 0;
+  padding: 0;
 }
 
 #info-container {
