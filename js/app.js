@@ -72,7 +72,7 @@ container.addEventListener('click', (e) => {
   if (e.target.className == 'clickable') {
     fillModal();
     modal.style.display = "block";
-    modalWindow.style.display = "block";
+    modalWindow.style.display = "grid";
     for(let i =0; i < allCards.length; i+=1) {
       if (allCards[i] == e.target) {
         cardNumber = i;

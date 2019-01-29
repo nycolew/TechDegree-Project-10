@@ -5,9 +5,10 @@ const container = document.getElementById("container");
 const modal = document.getElementById("modal");
 const modalWindow = document.getElementById("modal_window");
 let cardNumber;
-
-
-
+let users;
+let allCards;
+let leftArrow;
+let rightArrow;
 
 // FETCH DATA FROM API AND CONVERT TO JSON
 // >> Set function to check responses for errors
@@ -39,7 +40,7 @@ goFetch('https://randomuser.me/api/?results=12&nat=us,gb')
 // USE DATA TO POPULATE GRID WITH 12 USER "CARD" DIVS
 
   .then(loop => {
-    const users = userArray[0].results;
+    users = userArray[0].results;
     for (i; i < users.length; i++) {
       const createLink = document.createElement('a');
       container.appendChild(createLink);
@@ -59,33 +60,37 @@ goFetch('https://randomuser.me/api/?results=12&nat=us,gb')
 
       createLink.innerHTML = populateCard;
     }
+
+    allCards = document.querySelectorAll('.card');
+
   });
 
 // WHEN CARD IS CLICKED, OPEN MODAL WINDOW WITH THAT CARD'S DATA
 
-const users = userArray[0].results;
-
 function openModal() {
   modal.style.display = "block";
-  modalWindow.style.display = "block";
+  modalWindow.style.display = "grid";
 }
 
 function fillModal() {
-  // const users = userArray[0].results;
   let modalHTML = `
-    <span id="close-window">&times;</span>
-    <span id="previous" onclick="scrollLeft()">&#10094;</span>
-    <div id="windowCard">
-      <img src="${users[cardNumber].picture.large}" alt="Photo of ${users[cardNumber].name.first} ${users[cardNumber].name.last}">
-      <h2>${users[cardNumber].name.first} ${users[cardNumber].name.last}</h2>
-      <a class="email" href="mailto:${users[cardNumber].email}">${users[cardNumber].email}</a>
-      <p class="city">${users[cardNumber].location.city}</p>
-    </div>
-    <span id="next" onclick="scrollRight()">&#10095;</span>
-  `;
-}
 
-const allCards = document.querySelectorAll('.card');
+      <span id="close-window">&times;</span>
+      <div id="info-container">
+        <span id="previous">&#10094;</span>
+        <div id="windowCard">
+          <img src="${users[cardNumber].picture.large}" alt="Photo of ${users[cardNumber].name.first} ${users[cardNumber].name.last}">
+          <h2>${users[cardNumber].name.first} ${users[cardNumber].name.last}</h2>
+          <a class="email" href="mailto:${users[cardNumber].email}">${users[cardNumber].email}</a>
+          <p class="city">${users[cardNumber].location.city}</p>
+        </div>
+        <span id="next">&#10095;</span>
+      </div>
+  `;
+  modalWindow.innerHTML = modalHTML;
+  leftArrow = document.getElementById('previous');
+  rightArrow = document.getElementById('next');
+}
 
 container.addEventListener('click', (e) => {
   for (i = 0; i < allCards.length; i++) {
@@ -96,10 +101,36 @@ container.addEventListener('click', (e) => {
     }
   }
   openModal();
-  setTimeout( () => { fillModal(); }, 400);
+  setTimeout( () => { fillModal(); }, 200);
 });
 
 // WHEN ARROWS ARE CLICKED, MOVE LEFT OR RIGHT THROUGH USERS
+
+function scrollLeft() {
+  if (cardNumber > 0) {
+    cardNumber -= 1;
+  } else if (cardNumber == 0) {
+    cardNumber = allCards.length;
+  }
+  setTimeout( () => { fillModal(); }, 200);
+}
+
+function scrollRight() {
+  if (cardNumber < allCards.length) {
+    cardNumber += 1;
+  } else if (cardNumber == allCards.length) {
+    cardNumber == allCards[0];
+  }
+  setTimeout( () => {fillModal(); }, 200);
+}
+
+leftArrow.addEventListener('click', (e) => {
+  scrollLeft();
+});
+
+rightArrow.addEventListener('click', (e) => {
+  scrollRight();
+})
 
 // WHEN X IS CLICKED OR AN OUTSIDE CLICK IS DETECTED, CLOSE MODAL WINDOW
 
