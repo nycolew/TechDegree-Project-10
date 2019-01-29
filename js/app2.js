@@ -151,3 +151,17 @@ function clickExit(e) {
 }
 
 // ALLOW SEARCH BOX INPUT TO FILTER USERS BY NAME
+
+const searchBox = document.getElementById('search');
+const searchValue = searchBox.value.toLowerCase();
+const allLinks = document.querySelectorAll('a');
+let link;
+let userName;
+
+for (i = 0; i < allLinks.length; i++) {
+  link = allLinks[i];
+  userName = link.getElementByTagName('h3').innerText.toLowerCase();
+  if (userName.indexOf(searchValue) < -1) {
+    link.style.display = "none"; 
+  }
+}
