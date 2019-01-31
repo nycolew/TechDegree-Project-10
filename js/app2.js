@@ -108,31 +108,31 @@ container.addEventListener('click', (e) => {
 
 // WHEN ARROWS ARE CLICKED, MOVE LEFT OR RIGHT THROUGH USERS
 
-// function scrollLeft() {
-//   if (cardNumber > 0) {
-//     cardNumber -= 1;
-//   } else if (cardNumber == 0) {
-//     cardNumber = allCards.length;
-//   }
-//   setTimeout( () => { fillModal(); }, 200);
-// }
-//
-// function scrollRight() {
-//   if (cardNumber < allCards.length) {
-//     cardNumber += 1;
-//   } else if (cardNumber == allCards.length) {
-//     cardNumber == allCards[0];
-//   }
-//   setTimeout( () => {fillModal(); }, 200);
-// }
-//
-// leftArrow.addEventListener('click', (e) => {
-//   scrollLeft();
-// });
-//
-// rightArrow.addEventListener('click', (e) => {
-//   scrollRight();
-// })
+function scrollLeft() {
+  if (cardNumber > 0) {
+    cardNumber -= 1;
+  } else if (cardNumber == 0) {
+    cardNumber = allCards.length;
+  }
+  setTimeout( () => { fillModal(); }, 200);
+}
+
+function scrollRight() {
+  if (cardNumber < allCards.length) {
+    cardNumber += 1;
+  } else if (cardNumber == allCards.length) {
+    cardNumber == allCards[0];
+  }
+  setTimeout( () => {fillModal(); }, 200);
+}
+
+leftArrow.addEventListener('click', (e) => {
+  scrollLeft();
+});
+
+rightArrow.addEventListener('click', (e) => {
+  scrollRight();
+})
 
 // WHEN X IS CLICKED OR AN OUTSIDE CLICK IS DETECTED, CLOSE MODAL WINDOW
 
@@ -156,7 +156,7 @@ const searchBox = document.getElementById('search');
 
 searchBox.addEventListener('keyup', () => {
   const searchValue = searchBox.value.toLowerCase();
-  const allLinks = container.querySelectorAll('a');
+  const allLinks = document.querySelectorAll('#container > a');
   let link;
   let userName;
 
@@ -165,8 +165,8 @@ searchBox.addEventListener('keyup', () => {
     userName = link.getElementsByTagName('h2')[0].innerText.toLowerCase();
     if (userName.indexOf(searchValue) < 0) {
       link.style.display = "none";
-    } else if (userName.indexOf(searchValue) > 0) {
-      link.style.display = ""; 
+    } else {
+      link.style.display = "";
     }
   }
 });
