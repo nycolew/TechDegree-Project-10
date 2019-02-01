@@ -372,6 +372,11 @@ a:not(.email) {
   padding: 1.5625em;
   cursor: pointer;
 }
+.card:hover {
+  transform: scale(1.1);
+  transition-property: transform;
+  transition-duration: 200ms;
+}
 
 .pic,
 .text,
@@ -415,20 +420,10 @@ header {
   border-radius: 0.5em;
   border: 4px solid #2fa7c1;
   animation-name: openModal;
-  animation-duration: 0.5s;
+  animation-duration: 0.4s;
   animation-timing-function: cubic-bezier(0.04, -0.15, 0.76, 1.31);
 }
 
-@keyframes openModal {
-  from {
-    top: -300px;
-    opacity: 0;
-  }
-  to {
-    top: 15%;
-    opacity: 1;
-  }
-}
 #close-window {
   background: #ffffff;
   cursor: pointer;
@@ -498,6 +493,36 @@ h1 {
 .city {
   text-transform: capitalize;
   margin-top: 0.3125em;
+}
+
+@keyframes openModal {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes closeModal {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+.next-card {
+  transform: perspective(400px) rotateY(360deg);
+  transition: transform 350ms;
+}
+
+.prev-card {
+  transform: perspective(400px) rotateY(-360deg);
+  transition: transform 350ms;
 }
 
 img {

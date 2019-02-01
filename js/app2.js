@@ -64,7 +64,17 @@ goFetch('https://randomuser.me/api/?results=12&nat=us,gb')
     }
 
     allCards = document.querySelectorAll('.card');
-
+    container.addEventListener('click', (e) => {
+      for (i = 0; i < allCards.length; i++) {
+        if (allCards[i] == e.target
+        || allCards[i] == e.target.parentElement
+        || allCards[i] == e.target.parentElement.parentElement) {
+          cardNumber = i;
+        }
+      }
+      openModal();
+      setTimeout( () => { fillModal(); }, 500);
+    });
   });
 
 // WHEN CARD IS CLICKED, OPEN MODAL WINDOW WITH THAT CARD'S DATA
@@ -92,19 +102,16 @@ function fillModal() {
   modalWindow.innerHTML = modalHTML;
   leftArrow = document.getElementById('previous');
   rightArrow = document.getElementById('next');
+
+  leftArrow.addEventListener('click', (e) => {
+    scrollLeft();
+  });
+
+  rightArrow.addEventListener('click', (e) => {
+    scrollRight();
+  })
 }
 
-container.addEventListener('click', (e) => {
-  for (i = 0; i < allCards.length; i++) {
-    if (allCards[i] == e.target
-    || allCards[i] == e.target.parentElement
-    || allCards[i] == e.target.parentElement.parentElement) {
-      cardNumber = i;
-    }
-  }
-  openModal();
-  setTimeout( () => { fillModal(); }, 500);
-});
 
 // WHEN ARROWS ARE CLICKED, MOVE LEFT OR RIGHT THROUGH USERS
 
@@ -112,27 +119,24 @@ function scrollLeft() {
   if (cardNumber > 0) {
     cardNumber -= 1;
   } else if (cardNumber == 0) {
-    cardNumber = allCards.length;
+    cardNumber = allCards.length - 1 ;
   }
+  modalWindow.classList.add('prev-card');
   setTimeout( () => { fillModal(); }, 200);
+  setTimeout( () => {modalWindow.classList.remove('prev-card')}, 210);
 }
 
 function scrollRight() {
-  if (cardNumber < allCards.length) {
+  if (cardNumber < allCards.length - 1) {
     cardNumber += 1;
-  } else if (cardNumber == allCards.length) {
-    cardNumber == allCards[0];
+  } else {
+    cardNumber = 0;
   }
+  modalWindow.classList.add('next-card');
   setTimeout( () => {fillModal(); }, 200);
+  setTimeout( () => {modalWindow.classList.remove('next-card')}, 210);
 }
 
-leftArrow.addEventListener('click', (e) => {
-  scrollLeft();
-});
-
-rightArrow.addEventListener('click', (e) => {
-  scrollRight();
-})
 
 // WHEN X IS CLICKED OR AN OUTSIDE CLICK IS DETECTED, CLOSE MODAL WINDOW
 
