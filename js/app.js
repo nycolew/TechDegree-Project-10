@@ -1,11 +1,20 @@
-const userArray = [];
-const container = document.getElementById('container');
-const modal = document.getElementById('modal');
-const modalWindow = document.getElementById('modal_window');
-let cardNumber;
-// let i = 0;
 
-// CHECK RESPONSE FOR ERRORS
+let userArray = [];
+let i = 0;
+const container = document.getElementById("container");
+const modal = document.getElementById("modal");
+const modalWindow = document.getElementById("modal_window");
+let cardNumber;
+let users;
+let allCards;
+let leftArrow;
+let rightArrow;
+
+window.addEventListener('click', clickOut);
+
+// FETCH DATA FROM API AND CONVERT TO JSON
+// >> Set function to check responses for errors
+
 function checksOut(response) {
   if (response.ok) {
     return Promise.resolve(response)
@@ -14,79 +23,158 @@ function checksOut(response) {
   }
 };
 
-// REUSABLE FETCH FUNCTION
+// >> Set reusable fetch function
+
 function goFetch(url) {
   return fetch(url)
     .then(checksOut)
-    .then(response => response.json())
+    .then(function(response) {
+      return response.json();
+    })
     .catch(new Error('Fetch failed.'))
 };
 
-// FETCH RANDOM USERS
+// >> Fetch data for 12 random users with only English alphabet characters
+
 goFetch('https://randomuser.me/api/?results=12&nat=us,gb')
   .then(info => userArray.push(info))
+
+// USE DATA TO POPULATE GRID WITH 12 USER "CARD" DIVS
+
   .then(loop => {
-    const users = userArray[0].results;
-    for (let i = 0; i < userArray[0].results.length; i+=1) {
+    users = userArray[0].results;
+    for (i; i < users.length; i++) {
       const createLink = document.createElement('a');
       container.appendChild(createLink);
 
       let populateCard = `
-        <div class="card clickable">
-          <div class="pic clickable">
-            <img src="${users[i].picture.medium}" alt="Photo of ${users[i].name.first} ${users[i].name.last}">
+        <div class="card">
+          <div class="pic">
+            <img src="${users[i].picture.medium}" alt="Picture of ${users[i].name.first} ${users[i].name.last}">
           </div>
-          <div class="text clickable">
+          <div class="text">
             <h2>${users[i].name.first} ${users[i].name.last}</h2>
             <a class="email" href="mailto:${users[i].email}">${users[i].email}</a>
-            <p class="city clickable">${users[i].location.city}</p>
+            <p class="city">${users[i].location.city}</p>
           </div>
+        </div>
       `;
 
       createLink.innerHTML = populateCard;
     }
-  })
 
-  // POPULATE MODAL WINDOW
-  function fillModal() {
-    const users = userArray[0].results;
-    let windowContent = `
-    <span id="close-window">&times;</span>
-    <span id="previous" onclick="scrollLeft()">&#10094;</span>
-    <div id="windowCard">
-      <img src="${users[cardNumber].picture.large}" alt="Photo of ${users[cardNumber].name.first} ${users[cardNumber].name.last}">
-      <h2>${users[cardNumber].name.first} ${users[cardNumber].name.last}</h2>
-      <a class="email" href="mailto:${users[cardNumber].email}">${users[cardNumber].email}</a>
-      <p class="city">${users[cardNumber].location.city}</p>
-    </div>
-    <span id="next" onclick="scrollRight()">&#10095;</span>
-    `;
-
-    modalWindow.innerHTML = windowContent;
-  };
-
-  // LISTEN FOR PAGE CLICKS AND OPEN MODAL WINDOW
-
-container.addEventListener('click', (e) => {
-  const allCards = document.querySelectorAll('.card');
-  if (e.target.className == 'clickable') {
-    fillModal();
-    modal.style.display = "block";
-    modalWindow.style.display = "grid";
-    for(let i =0; i < allCards.length; i+=1) {
-      if (allCards[i] == e.target) {
-        cardNumber = i;
+    allCards = document.querySelectorAll('.card');
+    container.addEventListener('click', (e) => {
+      for (i = 0; i < allCards.length; i++) {
+        if (allCards[i] == e.target
+        || allCards[i] == e.target.parentElement
+        || allCards[i] == e.target.parentElement.parentElement) {
+          cardNumber = i;
+        }
       }
+      openModal();
+      setTimeout( () => { fillModal(); }, 500);
+    });
+  });
+
+// WHEN CARD IS CLICKED, OPEN MODAL WINDOW WITH THAT CARD'S DATA
+
+function openModal() {
+  modal.style.display = "block";
+  modalWindow.style.display = "grid";
+}
+
+function fillModal() {
+  let modalHTML = `
+
+      <span id="close-window" onclick="clickExit()">&times;</span>
+      <div id="info-container">
+        <span id="previous">&#10094;</span>
+        <div id="windowCard">
+          <img src="${users[cardNumber].picture.large}" alt="Photo of ${users[cardNumber].name.first} ${users[cardNumber].name.last}">
+          <h2>${users[cardNumber].name.first} ${users[cardNumber].name.last}</h2>
+          <a class="email" href="mailto:${users[cardNumber].email}">${users[cardNumber].email}</a>
+          <p class="cell">${users[cardNumber].cell}</p>
+          <p class="street">${users[cardNumber].location.street}</p>
+          <p class="city">${users[cardNumber].location.city}, ${users[cardNumber].location.state}</p>
+          <p class="zip">${users[cardNumber].location.postcode}</p>
+          <p class="birthday">${new Date(Date.parse(users[cardNumber].dob.date)).toLocaleDateString(navigator.language)}</p>
+        </div>
+        <span id="next">&#10095;</span>
+      </div>
+  `;
+  modalWindow.innerHTML = modalHTML;
+  leftArrow = document.getElementById('previous');
+  rightArrow = document.getElementById('next');
+
+  leftArrow.addEventListener('click', (e) => {
+    scrollLeft();
+  });
+
+  rightArrow.addEventListener('click', (e) => {
+    scrollRight();
+  })
+}
+
+
+// WHEN ARROWS ARE CLICKED, MOVE LEFT OR RIGHT THROUGH USERS
+
+function scrollLeft() {
+  if (cardNumber > 0) {
+    cardNumber -= 1;
+  } else if (cardNumber == 0) {
+    cardNumber = allCards.length - 1 ;
+  }
+  modalWindow.classList.add('prev-card');
+  setTimeout( () => { fillModal(); }, 200);
+  setTimeout( () => {modalWindow.classList.remove('prev-card')}, 210);
+}
+
+function scrollRight() {
+  if (cardNumber < allCards.length - 1) {
+    cardNumber += 1;
+  } else {
+    cardNumber = 0;
+  }
+  modalWindow.classList.add('next-card');
+  setTimeout( () => {fillModal(); }, 200);
+  setTimeout( () => {modalWindow.classList.remove('next-card')}, 210);
+}
+
+
+// WHEN X IS CLICKED OR AN OUTSIDE CLICK IS DETECTED, CLOSE MODAL WINDOW
+
+function clickOut(e) {
+  if (e.target == modal) {
+    modal.style.display = "none";
+    modalWindow.style.display = "none";
+    modalWindow.innerHTML = '';
+  }
+}
+
+function clickExit(e) {
+  modal.style.display = "none";
+  modalWindow.style.display = "none";
+  modalWindow.innerHTML = '';
+}
+
+// ALLOW SEARCH BOX INPUT TO FILTER USERS BY NAME
+
+const searchBox = document.getElementById('search');
+
+searchBox.addEventListener('keyup', () => {
+  const searchValue = searchBox.value.toLowerCase();
+  const allLinks = document.querySelectorAll('#container > a');
+  let link;
+  let userName;
+
+  for (i = 0; i < allLinks.length; i++) {
+    link = allLinks[i];
+    userName = link.getElementsByTagName('h2')[0].innerText.toLowerCase();
+    if (userName.indexOf(searchValue) < 0) {
+      link.style.display = "none";
+    } else {
+      link.style.display = "";
     }
   }
 });
-
-// So, made some changes in there and got things to work @Nycole! :slightly_smiling_face: The first, and biggest change I made was to your `if` statement in your event listener.
-// Because you are checking for all elements inside of the container that have the class of "clickable", you could have your pic div, your text div, H2s As, or Ps that are being
-// clicked, but when you are comparing them to the allcards array, it has to be the card element that is being compared or it won't pass.
-// To fix this, I added some or clauses to your conditional so that it doesn't just check the element that was clicked, but its parent and grandparent as well. Also, inside that `if`
-// block, you are going to go ahead and want to set modal display style and call the fill modal function, where you have the call to fillModal
-// now is actually calling the function on each iteration of the loop, which is why you are always ending up with the final employee being displayed.
-// Just because I think the way I described the if statement is a little confusing to read, it may be easier to just share the conditional I came up with:
-// `if (allCards[i] === e.target || allCards[i] === e.target.parentElement || allCards[i] === e.target.parentElement.parentElement) {`
-// Hope this helps!
