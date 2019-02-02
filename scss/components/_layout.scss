@@ -32,8 +32,23 @@ a:not(.email) {
 .pic,
 .text,
 .city,
+.street,
+.zip,
+.cell,
+.birthday,
 h2 {
   background: $white;
+}
+
+.city,
+.street {
+  margin-bottom: 0;
+  text-transform: capitalize;
+}
+
+.city,
+.zip {
+  margin-top: 0; 
 }
 
 header {
@@ -62,7 +77,7 @@ header {
   margin-right: auto;
   z-index: 1000;
   width: 30%;
-  height: 60%;
+  height: 70%;
   top: 15%;
   left: 35%;
   display: none;
@@ -90,14 +105,14 @@ header {
   margin-right: auto;
   width: 85%;
   background: $white;
-  padding-top: 15%;
+  padding-top: 10%;
 }
 
 #previous,
 #next {
   font-size: em(60px);
   background: $white;
-  padding-top: 20%;
+  padding-top: 35%;
   cursor: pointer;
 }
 

@@ -94,7 +94,11 @@ function fillModal() {
           <img src="${users[cardNumber].picture.large}" alt="Photo of ${users[cardNumber].name.first} ${users[cardNumber].name.last}">
           <h2>${users[cardNumber].name.first} ${users[cardNumber].name.last}</h2>
           <a class="email" href="mailto:${users[cardNumber].email}">${users[cardNumber].email}</a>
-          <p class="city">${users[cardNumber].location.city}</p>
+          <p class="cell">${users[cardNumber].cell}</p>
+          <p class="street">${users[cardNumber].location.street}</p>
+          <p class="city">${users[cardNumber].location.city}, ${users[cardNumber].location.state}</p>
+          <p class="zip">${users[cardNumber].location.postcode}</p>
+          <p class="birthday">${new Date(Date.parse(users[cardNumber].dob.date)).toLocaleDateString(navigator.language)}</p>
         </div>
         <span id="next">&#10095;</span>
       </div>
